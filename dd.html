@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hacked By PRD8A</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #f00;
+      font-family: monospace;
+      font-size: 20px;
+      height: 100%;
+      overflow: hidden;
+      cursor: crosshair;
+      position: relative;
+      animation: bgFlash 10s infinite alternate;
+    }
+
+    video {
+      position: absolute;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 940px;
+      height: 360px;
+      max-width: 90%;
+      object-fit: cover;
+      z-index: 1;
+      display: none;
+      pointer-events: none;
+      filter: brightness(0.8) contrast(1.2);
+      mix-blend-mode: screen;
+    }
+
+    .ip-info {
+      font-size: 20px;
+      color: white;
+      opacity: 0.8;
+      white-space: pre-wrap;
+      text-shadow: 0 0 4px rgb(0, 0, 0);
+    }
+
+audio {
+  display: none;
+}
+
+    .floating-word {
+      position: absolute;
+      color: #f00;
+      font-weight: bold;
+      font-size: 22px;
+      opacity: 0.85;
+      user-select: none;
+      white-space: nowrap;
+      animation: floatUp 2s linear forwards;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 2px red);
+      text-shadow: 0 0 5px red, 0 0 10px red;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.85;
+      }
+      100% {
+        transform: translateY(-120px) rotate(15deg);
+        opacity: 0;
+      }
+    }
+
+    .credits {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 24px;
+      color: #f00;
+      text-shadow: 0 0 5px red, 0 0 10px red;
+      opacity: 0.9;
+      z-index: 999;
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <video id="creepyVideo" src="https://h.top4top.io/m_3446hmpx11.mov" preload="auto" loop autoplay muted></video>
+
+<audio src="https://cdn.discordapp.com/attachments/1382755546268176514/1382755584901648414/Call.mp3?ex=684ef1fd&is=684da07d&hm=4034204569ea2da851984a8cdb0c140b8c90b69439033b5315bf1a0569a61d9d&" autoplay loop controls></audio>
+
+  <div id="ipInfo" class="ip-info" style="position: absolute; top: 60%;  left: 40%;"></div>
+
+  <footer class="credits">discord.gg/z-b</footer>
+
+  <script>
+    const video = document.getElementById('creepyVideo');
+
+    function tryPlayVideo() {
+      video.style.display = 'block';
+      video.play().catch(() => {
+        document.body.addEventListener('click', () => {
+          video.play();
+        }, { once: true });
+      });
+    }
+
+    window.onload = tryPlayVideo;
+
+    const words = [
+      "system error", "PRD8A", "wake up", "null", "404", "????", "PRD8A",
+      "███", "01010101", "void detected", "PRD8A", "issing fragment", "katshib", "no exit",
+      "Alexander's", "katshib", "sleep() failed", "tracking you", "error 503",
+      "memory leak", "Alexander's", "warning", "PRD8A", "access denied", 
+      "recursive loop", "intruder alert", "fatal exception"
+    ];
+
+    function randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function createFloatingWord() {
+      const word = words[randomInt(0, words.length - 1)];
+      const span = document.createElement('span');
+      span.className = 'floating-word';
+      span.textContent = word;
+      span.style.left = randomInt(0, window.innerWidth - 150) + 'px';
+      span.style.top = randomInt(window.innerHeight / 2, window.innerHeight - 50) + 'px';
+      span.style.transform = `rotate(${randomInt(-15, 15)}deg)`;
+      document.body.appendChild(span);
+      setTimeout(() => { span.remove(); }, 2000);
+    }
+
+    setInterval(createFloatingWord, 300);
+
+    fetch("https://ipinfo.io/json?token=")
+      .then(response => response.json())
+      .then(data => {
+        const info = `
+IP: ${data.ip}
+City: ${data.city}
+Region: ${data.region}
+Country: ${data.country}
+Location: ${data.loc}
+Org: ${data.org}
+Timezone: ${data.timezone}
+        `.trim();
+        document.getElementById("ipInfo").textContent = info;
+      })
+      .catch(err => {
+        document.getElementById("ipInfo").textContent = "Unable to load IP info.";
+      });
+  </script>
+</body>
